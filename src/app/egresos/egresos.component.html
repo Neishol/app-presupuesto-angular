@@ -6,6 +6,9 @@
     <span class="text-success mx-3">{{
       egreso.getMonto() | currency : "EUR"
     }}</span>
+    <span class="badge bg-success ms-2">{{
+      egreso.getPorcentajeConsumido(totalIngresos) | entero | percent
+    }}</span>
     <button class="btn btn-sm btn-danger">
       <i class="bi bi-x-circle"></i>
       <!-- Bootstrap Icon -->

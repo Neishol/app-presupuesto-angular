@@ -15,7 +15,9 @@
         <div class="text-uppercase">EGRESOS</div>
         <div class="text-danger h5">
           {{ getEgresosTotales() | currency : "EUR" }}
-          <span class="badge bg-success ms-2">24%</span>
+          <span class="badge bg-success ms-2">{{
+            getPorcentajeTotalEgresos() | entero | percent
+          }}</span>
         </div>
       </div>
     </div>

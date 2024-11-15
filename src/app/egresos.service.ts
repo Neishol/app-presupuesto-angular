@@ -8,6 +8,7 @@ export class EgresosService {
   private listaEgresos: Transaccion[] = [
     new Transaccion('renta depto', 900),
     new Transaccion('ropas', 200),
+    new Transaccion('celular', 1200),
   ];
 
   constructor() {}

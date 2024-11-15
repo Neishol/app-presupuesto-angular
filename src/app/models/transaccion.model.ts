@@ -14,4 +14,8 @@ export class Transaccion {
   getMonto(): number {
     return this._monto;
   }
+
+  getPorcentajeConsumido(ingresoTotal: number): number {
+    return (this.getMonto() * 100) / ingresoTotal;
+  }
 }
