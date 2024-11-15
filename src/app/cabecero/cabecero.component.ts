@@ -1,6 +1,8 @@
+import { EgresosService } from './../egresos.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { BilleteraVirtualService } from '../billetera-virtual.service';
+import { IngresosService } from '../ingresos.service';
 
 @Component({
   selector: 'app-cabecero',
@@ -11,28 +13,32 @@ import { BilleteraVirtualService } from '../billetera-virtual.service';
 })
 export class CabeceroComponent {
   private presupuestoDisponible!: number;
-  private ingresos!: number;
-  private egresos!: number;
+  private ingresosTotales!: number;
+  private egresosTotales!: number;
   // private porcentajeTotal!: number;
 
-  constructor(private billeteraVirtual: BilleteraVirtualService) {}
+  constructor(
+    private billeteraVirtual: BilleteraVirtualService,
+    private ingresosService: IngresosService,
+    private egresosService: EgresosService
+  ) {}
 
   ngOnInit(): void {
     this.presupuestoDisponible =
       this.billeteraVirtual.getPresupuestoDisponible();
-    this.ingresos = this.billeteraVirtual.getIngresos();
-    this.egresos = this.billeteraVirtual.getEgresos();
+    this.ingresosTotales = this.ingresosService.getTotalIngresos();
+    this.egresosTotales = this.egresosService.getTotalEgresos();
   }
 
   getPresupuestoDisponible(): number {
     return this.presupuestoDisponible;
   }
 
-  getIngresos(): number {
-    return this.ingresos;
+  getIngresosTotales(): number {
+    return this.ingresosTotales;
   }
 
-  getEgresos(): number {
-    return this.egresos;
+  getEgresosTotales(): number {
+    return this.egresosTotales;
   }
 }

@@ -8,13 +8,13 @@
       <div class="col-md-5 text-center">
         <div class="text-uppercase">INGRESOS</div>
         <div class="text-success h5">
-          {{ getIngresos() | currency : "EUR" }}
+          {{ getIngresosTotales() | currency : "EUR" }}
         </div>
       </div>
       <div class="col-md-5 text-center">
         <div class="text-uppercase">EGRESOS</div>
         <div class="text-danger h5">
-          {{ getEgresos() | currency : "EUR" }}
+          {{ getEgresosTotales() | currency : "EUR" }}
           <span class="badge bg-success ms-2">24%</span>
         </div>
       </div>
