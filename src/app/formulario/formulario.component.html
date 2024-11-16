@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <form class="row g-2">
       <div class="col-auto">
-        <select class="form-select bg-success">
+        <select class="form-select bg-success" #selectElement>
           <option value="ingresoOperacion" selected>+</option>
           <option value="egresoOperacion">-</option>
         </select>
@@ -13,6 +13,8 @@
           class="form-control border-success"
           placeholder="Descripción"
           required
+          [(ngModel)]="descripcionInput"
+          name="descripcion"
         />
       </div>
       <div class="col-auto">
@@ -21,10 +23,16 @@
           class="form-control border-success"
           placeholder="Valor"
           required
+          [(ngModel)]="valorInput"
+          name="valor"
         />
       </div>
       <div class="col-auto">
-        <button type="submit" class="btn btn-success">
+        <button
+          type="submit"
+          class="btn btn-success"
+          (click)="addTransaccion()"
+        >
           <i class="bi bi-check-circle"></i>
           <!-- Bootstrap Icon -->
         </button>

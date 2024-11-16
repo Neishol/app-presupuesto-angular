@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Transaccion } from './models/transaccion.model';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,17 @@ export class IngresosService {
     new Transaccion('venta coche', 500),
   ];
 
+  private ingresosSubject = new BehaviorSubject<number>(
+    this.getTotalIngresos()
+  );
+  ingresos$ = this.ingresosSubject.asObservable();
+
   constructor() {}
+
+  actualizarIngresosTotales(): Observable<number> {
+    console.log('Observable metodo');
+    return of(this.getTotalIngresos());
+  }
 
   getListaIngresos(): Transaccion[] {
     return this.listaIngresos;
@@ -28,6 +39,8 @@ export class IngresosService {
 
   addIngreso(transaccion: Transaccion): void {
     this.listaIngresos.push(transaccion);
+    this.ingresosSubject.next(this.getTotalIngresos());
+    console.log(`${transaccion.getDescripcion()} agregado`);
   }
 
   deleteIngreso(transaccion: Transaccion): void {

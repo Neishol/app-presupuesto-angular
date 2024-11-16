@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { IngresosService } from '../ingresos.service';
 import { Transaccion } from '../models/transaccion.model';
 import { CommonModule } from '@angular/common';
@@ -13,9 +13,13 @@ import { CommonModule } from '@angular/common';
 export class IngresosComponent {
   listadoIngresos!: Transaccion[];
 
-  constructor(private ingresosService: IngresosService) {}
+  constructor(
+    private ingresosService: IngresosService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.listadoIngresos = this.ingresosService.getListaIngresos();
+    this.cdr.detectChanges();
   }
 }

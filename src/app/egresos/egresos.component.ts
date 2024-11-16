@@ -1,5 +1,5 @@
 import { IngresosService } from './../ingresos.service';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Transaccion } from '../models/transaccion.model';
 import { EgresosService } from '../egresos.service';
 import { CommonModule } from '@angular/common';
@@ -18,11 +18,13 @@ export class EgresosComponent {
 
   constructor(
     private egresosService: EgresosService,
-    private ingresosService: IngresosService
+    private ingresosService: IngresosService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.listadoEgresos = this.egresosService.getListaEgresos();
     this.totalIngresos = this.ingresosService.getTotalIngresos();
+    this.cdr.detectChanges();
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Transaccion } from './models/transaccion.model';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,14 @@ export class EgresosService {
     new Transaccion('celular', 1200),
   ];
 
+  private egresosSubject = new BehaviorSubject<number>(this.getTotalEgresos());
+  egresos$ = this.egresosSubject.asObservable();
+
   constructor() {}
+
+  actualizarEgresosTotales(): Observable<number> {
+    return of(this.getTotalEgresos());
+  }
 
   getListaEgresos(): Transaccion[] {
     return this.listaEgresos;
@@ -27,15 +35,16 @@ export class EgresosService {
     return totalEgresos;
   }
 
-  addIngreso(transaccion: Transaccion): void {
+  addEgreso(transaccion: Transaccion): void {
     this.listaEgresos.push(transaccion);
+    this.egresosSubject.next(this.getTotalEgresos());
   }
 
-  deleteIngreso(transaccion: Transaccion): void {
+  deleteEgreso(transaccion: Transaccion): void {
     const index = this.listaEgresos.findIndex(
-      (ingreso) =>
-        ingreso.getDescripcion() === transaccion.getDescripcion() &&
-        ingreso.getMonto() === transaccion.getMonto()
+      (Egreso) =>
+        Egreso.getDescripcion() === transaccion.getDescripcion() &&
+        Egreso.getMonto() === transaccion.getMonto()
     );
     if (index !== -1) {
       this.listaEgresos.splice(index, 1);
