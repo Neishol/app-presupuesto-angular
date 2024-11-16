@@ -16,11 +16,28 @@ export class FormularioComponent {
   descripcionInput: string = '';
   valorInput: number | null = null;
   @ViewChild('selectElement') selectElement!: ElementRef;
+  ingresosTotales!: number;
+  egresosTotales!: number;
 
   constructor(
     private ingresosService: IngresosService,
     private egresosService: EgresosService
   ) {}
+
+  ngOnInit(): void {
+    this.ingresosTotales = this.ingresosService.getTotalIngresos();
+    this.egresosTotales = this.egresosService.getTotalEgresos();
+    this.ingresosService.ingresos$.subscribe((updatedData) => {
+      this.ingresosTotales = updatedData;
+    });
+    this.egresosService.egresos$.subscribe((updatedData) => {
+      this.egresosTotales = updatedData;
+    });
+  }
+
+  getPresupuestoDisponible(): number {
+    return this.ingresosTotales - this.egresosTotales;
+  }
 
   addTransaccion(): void {
     if (
@@ -44,6 +61,10 @@ export class FormularioComponent {
         this.ingresosService.addIngreso(nuevaTransaccion);
         break;
       case 'egresoOperacion':
+        if (nuevaTransaccion.getMonto() > this.getPresupuestoDisponible()) {
+          alert('Error, usted no cuenta con tanto presupuesto');
+          break;
+        }
         this.egresosService.addEgreso(nuevaTransaccion);
         break;
       default:
