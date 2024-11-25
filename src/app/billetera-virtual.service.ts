@@ -8,7 +8,6 @@ export class BilleteraVirtualService {
   private ingresos: number | null;
   private egresos: number | null;
 
-  //pasar lineas de codigo de cabecera a este servicio
   constructor() {
     this.presupuestoDisponible = 3400;
     this.ingresos = 4500;
